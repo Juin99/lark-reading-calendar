@@ -1,0 +1,733 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Lark Reading Calendar 项目介绍</title>
+  <style>
+    :root {
+      --ink: #18202c;
+      --muted: #5f6b7a;
+      --paper: #f4f6f8;
+      --panel: #ffffff;
+      --line: #d8dee8;
+      --green: #176b58;
+      --blue: #245c9c;
+      --yellow: #a56a12;
+      --red: #a13d43;
+      --violet: #6156a8;
+      --shadow: 0 18px 52px rgba(21, 30, 43, 0.14);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--paper);
+      font-family: Inter, "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+      letter-spacing: 0;
+      overflow: hidden;
+    }
+
+    .deck {
+      width: 100vw;
+      height: 100vh;
+      position: relative;
+    }
+
+    .slide {
+      position: absolute;
+      inset: 0;
+      display: none;
+      padding: 54px 68px 74px;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.9), rgba(244,246,248,0.98)),
+        repeating-linear-gradient(90deg, rgba(24,32,44,0.04) 0 1px, transparent 1px 88px);
+    }
+
+    .slide.active {
+      display: grid;
+      grid-template-rows: auto 1fr;
+      gap: 30px;
+    }
+
+    .eyebrow {
+      color: var(--green);
+      font-weight: 760;
+      font-size: 14px;
+      text-transform: uppercase;
+    }
+
+    h1,
+    h2,
+    p {
+      margin: 0;
+    }
+
+    h1 {
+      max-width: 980px;
+      font-size: 56px;
+      line-height: 1.06;
+      font-weight: 800;
+    }
+
+    h2 {
+      font-size: 40px;
+      line-height: 1.12;
+      font-weight: 780;
+      max-width: 1080px;
+    }
+
+    .lead {
+      max-width: 900px;
+      color: var(--muted);
+      font-size: 23px;
+      line-height: 1.5;
+      margin-top: 22px;
+    }
+
+    .subtitle {
+      color: var(--muted);
+      font-size: 20px;
+      line-height: 1.48;
+      max-width: 930px;
+      margin-top: 14px;
+    }
+
+    .body {
+      min-height: 0;
+      display: grid;
+      align-items: center;
+    }
+
+    .title-grid {
+      display: grid;
+      grid-template-columns: 1.02fr 0.98fr;
+      gap: 46px;
+      align-items: center;
+    }
+
+    .signal-board {
+      min-height: 430px;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      border-radius: 8px;
+      padding: 28px;
+      display: grid;
+      gap: 18px;
+    }
+
+    .signal-row {
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      gap: 16px;
+      align-items: center;
+    }
+
+    .signal-label {
+      color: var(--muted);
+      font-size: 16px;
+      font-weight: 700;
+    }
+
+    .signal-box {
+      border: 1px solid var(--line);
+      border-left: 6px solid var(--blue);
+      border-radius: 7px;
+      background: #fbfcfe;
+      padding: 16px 18px;
+      font-size: 20px;
+      font-weight: 720;
+      min-height: 64px;
+      display: grid;
+      align-items: center;
+    }
+
+    .signal-box.green {
+      border-left-color: var(--green);
+    }
+
+    .signal-box.yellow {
+      border-left-color: var(--yellow);
+    }
+
+    .signal-box.red {
+      border-left-color: var(--red);
+    }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+      align-items: stretch;
+    }
+
+    .three-col {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 22px;
+      align-items: stretch;
+    }
+
+    .panel,
+    .metric {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 26px;
+      box-shadow: 0 10px 28px rgba(21, 30, 43, 0.08);
+    }
+
+    .panel h3,
+    .metric h3 {
+      margin: 0 0 18px;
+      font-size: 24px;
+      line-height: 1.2;
+    }
+
+    .bullets {
+      display: grid;
+      gap: 14px;
+      padding: 0;
+      margin: 0;
+      list-style: none;
+    }
+
+    .bullets li {
+      position: relative;
+      padding-left: 24px;
+      color: #2d3745;
+      font-size: 20px;
+      line-height: 1.42;
+    }
+
+    .bullets li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0.62em;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--green);
+    }
+
+    .flow {
+      display: grid;
+      gap: 18px;
+    }
+
+    .flow-line {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 12px;
+      align-items: stretch;
+    }
+
+    .flow-step {
+      min-height: 120px;
+      border: 1px solid var(--line);
+      background: var(--panel);
+      border-radius: 8px;
+      padding: 18px 16px;
+      display: grid;
+      align-content: center;
+      gap: 8px;
+      box-shadow: 0 8px 20px rgba(21, 30, 43, 0.07);
+    }
+
+    .flow-step strong {
+      font-size: 19px;
+      line-height: 1.2;
+    }
+
+    .flow-step span {
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.34;
+    }
+
+    .connector {
+      text-align: center;
+      color: var(--muted);
+      font-size: 24px;
+      line-height: 1;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      overflow: hidden;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+    }
+
+    th,
+    td {
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--line);
+      vertical-align: top;
+      text-align: left;
+      font-size: 17px;
+      line-height: 1.34;
+    }
+
+    th {
+      background: #eef2f6;
+      font-weight: 760;
+    }
+
+    tr:last-child td {
+      border-bottom: 0;
+    }
+
+    .tag {
+      display: inline-grid;
+      place-items: center;
+      min-height: 30px;
+      padding: 4px 10px;
+      border-radius: 6px;
+      background: #e9f4f0;
+      color: var(--green);
+      font-weight: 760;
+      font-size: 15px;
+    }
+
+    .big-quote {
+      max-width: 1020px;
+      color: #263240;
+      font-size: 34px;
+      line-height: 1.42;
+      font-weight: 760;
+    }
+
+    .footer {
+      position: absolute;
+      left: 68px;
+      right: 68px;
+      bottom: 28px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .progress {
+      display: flex;
+      gap: 7px;
+      align-items: center;
+    }
+
+    .dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #c6ced8;
+    }
+
+    .dot.active {
+      width: 22px;
+      border-radius: 999px;
+      background: var(--green);
+    }
+
+    .nav {
+      position: absolute;
+      right: 28px;
+      bottom: 24px;
+      display: flex;
+      gap: 8px;
+      z-index: 10;
+    }
+
+    .nav button {
+      width: 42px;
+      height: 38px;
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      background: var(--panel);
+      color: var(--ink);
+      font-size: 20px;
+      cursor: pointer;
+      box-shadow: 0 6px 16px rgba(21, 30, 43, 0.08);
+    }
+
+    .video-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 22px;
+      color: var(--blue);
+      font-size: 18px;
+      font-weight: 740;
+      text-decoration: none;
+    }
+
+    .video-link::before {
+      content: "";
+      width: 14px;
+      height: 14px;
+      border-radius: 3px;
+      background: var(--blue);
+      clip-path: polygon(0 0, 100% 50%, 0 100%);
+    }
+
+    @media (max-width: 900px) {
+      body {
+        overflow: auto;
+      }
+
+      .deck {
+        min-height: 100vh;
+        height: auto;
+      }
+
+      .slide {
+        position: relative;
+        min-height: 100vh;
+        padding: 34px 22px 88px;
+      }
+
+      h1 {
+        font-size: 38px;
+      }
+
+      h2 {
+        font-size: 30px;
+      }
+
+      .lead {
+        font-size: 19px;
+      }
+
+      .title-grid,
+      .two-col,
+      .three-col,
+      .flow-line {
+        grid-template-columns: 1fr;
+      }
+
+      .footer {
+        left: 22px;
+        right: 22px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="deck" aria-live="polite">
+    <section class="slide active">
+      <header>
+        <div class="eyebrow">Lark Reading Calendar</div>
+        <h1>把碎片化待读内容，变成可排期的阅读工作流</h1>
+        <p class="lead">从微信剪贴板到 CloudBase 队列，再到飞书日历和多维表：让“稍后阅读”真正进入时间表。</p>
+        <a class="video-link" href="https://www.xiaohongshu.com/explore/6a4765da000000001003ce53?xsec_token=ABA-pX2tDa-IirL40I_uTeaRhhnICBTvVU-5F80jPhj9Y=&xsec_source=pc_user" target="_blank" rel="noreferrer">观看项目介绍视频</a>
+      </header>
+      <div class="body">
+        <div class="title-grid">
+          <div class="signal-board">
+            <div class="signal-row">
+              <div class="signal-label">入口</div>
+              <div class="signal-box">微信内容、网页链接、视频笔记</div>
+            </div>
+            <div class="signal-row">
+              <div class="signal-label">收集</div>
+              <div class="signal-box green">iPhone 快捷指令 / OpenClaw / curl</div>
+            </div>
+            <div class="signal-row">
+              <div class="signal-label">调度</div>
+              <div class="signal-box yellow">CloudBase 云函数与队列</div>
+            </div>
+            <div class="signal-row">
+              <div class="signal-label">落地</div>
+              <div class="signal-box red">飞书日历、飞书多维表、反馈页</div>
+            </div>
+          </div>
+          <div>
+            <h2>核心目标</h2>
+            <p class="lead">不是再做一个收藏夹，而是把待读内容从“存起来”推进到“安排、阅读、反馈、复盘”。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <header>
+        <div class="eyebrow">Pain Point</div>
+        <h2>收藏内容，稍后阅读=从此积灰，再也不读？</h2>
+        <p class="subtitle">内容不是缺少入口，而是缺少一个能把它们推进下一步的系统。</p>
+      </header>
+      <div class="body">
+        <div class="three-col">
+          <article class="metric">
+            <h3>入口分散</h3>
+            <ul class="bullets">
+              <li>微信、网页、视频、笔记各有各的收藏入口</li>
+              <li>临时收藏很快变成长期堆积</li>
+            </ul>
+          </article>
+          <article class="metric">
+            <h3>没有时间约束</h3>
+            <ul class="bullets">
+              <li>“稍后读”没有变成具体的日程安排</li>
+              <li>没有提醒，也没有成批处理节奏</li>
+            </ul>
+          </article>
+          <article class="metric">
+            <h3>状态不可追踪</h3>
+            <ul class="bullets">
+              <li>读没读、读完没有、反馈是什么都散落在各处</li>
+              <li>复盘和沉淀很难持续发生</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <header>
+        <div class="eyebrow">Product</div>
+        <h2>这个项目做了什么：一个跨设备的阅读收件箱</h2>
+      </header>
+      <div class="body">
+        <div class="flow">
+          <div class="flow-line">
+            <div class="flow-step"><strong>快捷指令</strong><span>复制微信内容，一键提交</span></div>
+            <div class="flow-step"><strong>CloudBase</strong><span>鉴权、去重、入队、凑批</span></div>
+            <div class="flow-step"><strong>飞书群</strong><span>提示收集进度和排期结果</span></div>
+            <div class="flow-step"><strong>飞书日历</strong><span>创建阅读 block</span></div>
+            <div class="flow-step"><strong>多维表</strong><span>记录状态、批次和反馈</span></div>
+          </div>
+          <p class="subtitle">它把“复制一下”这个低成本动作，接到了一个云端工作流上。</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <header>
+        <div class="eyebrow">Technical Route</div>
+        <h2>核心技术路径：CloudBase + 飞书 OpenAPI</h2>
+      </header>
+      <div class="body">
+        <div class="two-col">
+          <article class="panel">
+            <h3>为什么用 CloudBase</h3>
+            <ul class="bullets">
+              <li>作为云端状态中心，不依赖某台电脑在线</li>
+              <li>手机、机器人、浏览器都能调用同一个 HTTP 入口</li>
+              <li>数据库保存 items、batches、auth 三类状态</li>
+            </ul>
+          </article>
+          <article class="panel">
+            <h3>为什么用飞书 OpenAPI</h3>
+            <ul class="bullets">
+              <li>云函数直接创建日历事件、写入多维表</li>
+              <li>OAuth token 存在部署者自己的 CloudBase 里</li>
+              <li>更适合跨设备、后台运行和长期自动化</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <header>
+        <div class="eyebrow">Inspiration</div>
+        <h2>和 Zara 的 reading-block-lark 是什么关系？</h2>
+        <p class="subtitle">Zara 项目提供了 Reading Block 的清晰灵感：把零散待读链接成批写入飞书日历。</p>
+      </header>
+      <div class="body">
+        <table>
+          <thead>
+            <tr>
+              <th>维度</th>
+              <th>Zara reading-block-lark</th>
+              <th>Lark Reading Calendar</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>入口</td>
+              <td>Chrome 插件</td>
+              <td>快捷指令、机器人、curl</td>
+            </tr>
+            <tr>
+              <td>存储</td>
+              <td>浏览器本地</td>
+              <td>CloudBase 数据库</td>
+            </tr>
+            <tr>
+              <td>调用方式</td>
+              <td>本机 helper + lark-cli</td>
+              <td>云函数 + 飞书 OpenAPI</td>
+            </tr>
+            <tr>
+              <td>运行环境</td>
+              <td>依赖电脑和浏览器</td>
+              <td>云端运行，跨设备触发</td>
+            </tr>
+            <tr>
+              <td>状态管理</td>
+              <td>本地列表</td>
+              <td>队列、批次、多维表、反馈</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="slide">
+      <header>
+        <div class="eyebrow">Innovation</div>
+        <h2>不是重写插件，而是把它扩展成工作流系统</h2>
+      </header>
+      <div class="body">
+        <div class="three-col">
+          <article class="panel">
+            <h3>入口扩展</h3>
+            <p class="subtitle">从浏览器插件扩展到 iPhone 快捷指令、微信机器人和其他自动化入口。</p>
+          </article>
+          <article class="panel">
+            <h3>状态扩展</h3>
+            <p class="subtitle">从本地临时列表扩展到云端队列、批次状态、OAuth 授权和反馈记录。</p>
+          </article>
+          <article class="panel">
+            <h3>模板扩展</h3>
+            <p class="subtitle">快捷指令、多维表、CloudBase 配置和教程都做成可复制模板。</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <header>
+        <div class="eyebrow">Open Source Boundary</div>
+        <h2>开源不是把自己的项目直接丢出去</h2>
+      </header>
+      <div class="body">
+        <div class="two-col">
+          <article class="panel">
+            <h3>可以公开的</h3>
+            <ul class="bullets">
+              <li>云函数代码和依赖</li>
+              <li>CloudBase 配置模板</li>
+              <li>快捷指令模板链接</li>
+              <li>飞书多维表模板和教程文档</li>
+            </ul>
+          </article>
+          <article class="panel">
+            <h3>必须隔离的</h3>
+            <ul class="bullets">
+              <li>真实 webhook、App Secret、envId</li>
+              <li>个人快捷指令配置</li>
+              <li>用户部署后的 OAuth token</li>
+              <li>复制后的多维表 app token / table id</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <header>
+        <div class="eyebrow">What I Learned</div>
+        <h2>真正重要的是数据流、权限流、运行环境</h2>
+      </header>
+      <div class="body">
+        <table>
+          <thead>
+            <tr>
+              <th>概念</th>
+              <th>要追问的问题</th>
+              <th>这个项目里的答案</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="tag">数据流</span></td>
+              <td>内容从哪里来，存到哪里，最后写到哪里？</td>
+              <td>快捷指令 → CloudBase 队列 → 飞书日历 / 多维表</td>
+            </tr>
+            <tr>
+              <td><span class="tag">权限流</span></td>
+              <td>谁有权限调用飞书？token 存在哪里？</td>
+              <td>部署者自己 OAuth 授权，token 存入自己的 CloudBase</td>
+            </tr>
+            <tr>
+              <td><span class="tag">运行环境</span></td>
+              <td>它依赖本机在线，还是能在云端长期运行？</td>
+              <td>CloudBase 云函数负责后台入口和调度</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="slide">
+      <header>
+        <div class="eyebrow">Reflection</div>
+        <h2>Vibe coding 让开始更快，理解原理让项目走得更远</h2>
+      </header>
+      <div class="body">
+        <p class="big-quote">AI 可以帮我更快搭出项目，但我仍然需要理解：数据在哪里、权限怎么走、系统边界在哪里、别人如何复用。真正的学习，是在实践里把这些问题一层层拆开。</p>
+      </div>
+    </section>
+
+    <div class="footer">
+      <span>Lark Reading Calendar</span>
+      <div class="progress" aria-hidden="true"></div>
+    </div>
+
+    <div class="nav" aria-label="Presentation navigation">
+      <button type="button" id="prev" aria-label="上一页">‹</button>
+      <button type="button" id="next" aria-label="下一页">›</button>
+    </div>
+  </main>
+
+  <script>
+    const slides = Array.from(document.querySelectorAll(".slide"));
+    const progress = document.querySelector(".progress");
+    const prev = document.getElementById("prev");
+    const next = document.getElementById("next");
+    let current = 0;
+
+    slides.forEach((_, index) => {
+      const dot = document.createElement("span");
+      dot.className = "dot" + (index === 0 ? " active" : "");
+      progress.appendChild(dot);
+    });
+
+    const dots = Array.from(document.querySelectorAll(".dot"));
+
+    function render(index) {
+      current = Math.max(0, Math.min(slides.length - 1, index));
+      slides.forEach((slide, i) => slide.classList.toggle("active", i === current));
+      dots.forEach((dot, i) => dot.classList.toggle("active", i === current));
+      document.title = `${current + 1}/${slides.length} · Lark Reading Calendar 项目介绍`;
+    }
+
+    prev.addEventListener("click", () => render(current - 1));
+    next.addEventListener("click", () => render(current + 1));
+
+    window.addEventListener("keydown", (event) => {
+      if (event.key === "ArrowRight" || event.key === " " || event.key === "PageDown") {
+        event.preventDefault();
+        render(current + 1);
+      }
+      if (event.key === "ArrowLeft" || event.key === "PageUp") {
+        event.preventDefault();
+        render(current - 1);
+      }
+      if (event.key === "Home") render(0);
+      if (event.key === "End") render(slides.length - 1);
+    });
+  </script>
+</body>
+</html>

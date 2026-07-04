@@ -4,6 +4,8 @@
 
 项目介绍视频：[小红书视频讲解](https://www.xiaohongshu.com/explore/6a4765da000000001003ce53?xsec_token=ABA-pX2tDa-IirL40I_uTeaRhhnICBTvVU-5F80jPhj9Y=&xsec_source=pc_user)
 
+项目介绍 PPT：[presentation/index.html](./presentation/index.html)
+
 这个项目适合这些场景：
 
 - 在微信里看到文章、视频、笔记，先复制到剪贴板，稍后集中读。
