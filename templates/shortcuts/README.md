@@ -1,5 +1,9 @@
 # 快捷指令模板
 
+iCloud 模板链接：待发布。
+
+当前仓库不提交 `.shortcut` 文件，因为 `.shortcut` 必须由 Apple Shortcuts App 生成并导出，手写文件无法保证可导入。发布前请用下面的动作蓝图新建一个完全脱敏的模板，再生成 iCloud 分享链接。
+
 目标模板名：
 
 ```text

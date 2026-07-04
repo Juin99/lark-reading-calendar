@@ -1,8 +1,24 @@
 # 飞书多维表模板
 
-公开模板链接待发布后补充。
+公开模板：
+
+```text
+https://juinbase.feishu.cn/base/UqRGbQ8OFazAgrsJ8YJc2mrSnee
+```
+
+配套教程：
+
+```text
+https://juinbase.feishu.cn/file/B4r9bqHiko0jUkxrhvkcys8xn9c
+```
 
 如果你不使用公开模板，也可以手动创建字段。字段名需要和代码保持一致。
+
+机器可读字段定义见：
+
+```text
+templates/bitable/fields.json
+```
 
 ## 字段列表
 

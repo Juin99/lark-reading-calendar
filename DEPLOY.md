@@ -179,7 +179,19 @@ curl '你的 CloudBase HTTP 地址?action=status&secret=你的 INTAKE_SECRET'
 
 ## 9. 复制飞书多维表模板
 
-公开模板链接待补充。你也可以按 [templates/bitable/schema.md](./templates/bitable/schema.md) 手动建表。
+打开公开模板：
+
+```text
+https://juinbase.feishu.cn/base/UqRGbQ8OFazAgrsJ8YJc2mrSnee
+```
+
+右上角选择复制或创建副本，得到你自己的多维表。模板配套教程：
+
+```text
+https://juinbase.feishu.cn/file/B4r9bqHiko0jUkxrhvkcys8xn9c
+```
+
+如果公开链接失效，也可以按 [templates/bitable/schema.md](./templates/bitable/schema.md) 手动建表，或使用 [templates/bitable/fields.json](./templates/bitable/fields.json) 作为机器可读字段定义。
 
 需要从多维表 URL 中取得：
 
@@ -187,6 +199,8 @@ curl '你的 CloudBase HTTP 地址?action=status&secret=你的 INTAKE_SECRET'
 FEISHU_BASE_APP_TOKEN
 FEISHU_BASE_TABLE_ID
 ```
+
+例如 URL 中 `/base/` 后面的 token 是 `FEISHU_BASE_APP_TOKEN`。表 ID 通常在 URL 的 `table=` 参数中，或可以通过飞书多维表 API/CLI 查询。
 
 填入 CloudBase 环境变量后重新部署。
 
@@ -201,6 +215,8 @@ FEISHU_BASE_TABLE_ID
 ## 10. 导入快捷指令模板
 
 快捷指令说明见 [templates/shortcuts/README.md](./templates/shortcuts/README.md)。
+
+iCloud 快捷指令模板链接待发布后补充。发布前请按说明手动搭建一次脱敏模板，并确认分享链接中不包含真实 CloudBase URL 或 `INTAKE_SECRET`。
 
 首次运行时填写：
 

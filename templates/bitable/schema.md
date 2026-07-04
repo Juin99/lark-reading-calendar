@@ -1,10 +1,24 @@
 # 飞书多维表字段模板
 
-公开模板名建议：
+公开模板：
 
 ```text
-Lark Reading Calendar 阅读收件箱
+https://juinbase.feishu.cn/base/UqRGbQ8OFazAgrsJ8YJc2mrSnee
 ```
+
+配套教程：
+
+```text
+https://juinbase.feishu.cn/file/B4r9bqHiko0jUkxrhvkcys8xn9c
+```
+
+公开模板名：
+
+```text
+Lark Reading Calendar 阅读收件箱模板
+```
+
+机器可读字段定义见 [fields.json](./fields.json)。
 
 ## 数据表：阅读收件箱
 
@@ -65,7 +79,7 @@ Lark Reading Calendar 阅读收件箱
 筛选：
 
 ```text
-阅读反馈 不为空
+状态 = 已读完
 ```
 
 排序：

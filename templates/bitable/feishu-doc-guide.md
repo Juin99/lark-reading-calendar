@@ -16,6 +16,12 @@
 
 ## 第一步：复制多维表
 
+公开模板链接：
+
+```text
+https://juinbase.feishu.cn/base/UqRGbQ8OFazAgrsJ8YJc2mrSnee
+```
+
 复制本模板后，保留字段名不变。云函数会按字段名写入数据。
 
 不要删除这些字段：
@@ -47,7 +53,9 @@ YOUR_CLOUDBASE_HTTP_URL?action=auth_start&secret=YOUR_INTAKE_SECRET
 
 ## 第四步：配置快捷指令
 
-导入快捷指令模板后，首次运行会要求填写：
+iCloud 快捷指令模板链接待发布。你也可以按 GitHub 仓库里的 `templates/shortcuts/README.md` 手动搭建。
+
+导入或手动搭建快捷指令后，首次运行会要求填写：
 
 ```text
 CloudBase HTTP URL

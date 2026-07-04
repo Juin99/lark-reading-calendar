@@ -1,0 +1,21 @@
+[
+  {"type":"text","name":"内容","description":"原始收集文本"},
+  {"type":"text","name":"标题","description":"链接识别出的标题"},
+  {"type":"text","name":"链接","style":{"type":"url"},"description":"内容里的第一条链接"},
+  {"type":"select","name":"平台","multiple":false,"options":[{"name":"wechat","hue":"Green"},{"name":"bilibili","hue":"Blue"},{"name":"xiaohongshu","hue":"Red"},{"name":"web","hue":"Purple"},{"name":"unknown","hue":"Gray"}],"description":"内容来源平台"},
+  {"type":"select","name":"来源","multiple":false,"options":[{"name":"iOS 快捷指令","hue":"Blue"},{"name":"OpenClaw","hue":"Green"},{"name":"手工测试","hue":"Gray"},{"name":"其他","hue":"Purple"}],"description":"提交来源"},
+  {"type":"select","name":"通道","multiple":false,"options":[{"name":"wechat","hue":"Green"},{"name":"test","hue":"Gray"},{"name":"other","hue":"Purple"}],"description":"收集通道"},
+  {"type":"text","name":"入口","description":"wechat-clipboard / openclaw-wechat / curl"},
+  {"type":"text","name":"发送人","description":"机器人入口发送人"},
+  {"type":"text","name":"消息ID","description":"去重 ID"},
+  {"type":"text","name":"CloudBaseItemId","description":"CloudBase item _id"},
+  {"type":"select","name":"状态","multiple":false,"options":[{"name":"待读","hue":"Blue"},{"name":"已排期","hue":"Purple"},{"name":"已读完","hue":"Green"},{"name":"未读完","hue":"Orange"},{"name":"稍后再读","hue":"Yellow"},{"name":"放弃","hue":"Gray"}],"description":"当前处理状态"},
+  {"type":"datetime","name":"收集时间","style":{"format":"yyyy-MM-dd HH:mm"},"description":"入队时间"},
+  {"type":"text","name":"批次ID","description":"所属批次 ID"},
+  {"type":"datetime","name":"日历开始","style":{"format":"yyyy-MM-dd HH:mm"},"description":"阅读 block 开始时间"},
+  {"type":"datetime","name":"日历结束","style":{"format":"yyyy-MM-dd HH:mm"},"description":"阅读 block 结束时间"},
+  {"type":"text","name":"日历链接","style":{"type":"url"},"description":"飞书日历事件链接"},
+  {"type":"datetime","name":"反馈时间","style":{"format":"yyyy-MM-dd HH:mm"},"description":"用户提交反馈的时间"},
+  {"type":"select","name":"阅读反馈","multiple":false,"options":[{"name":"已读完","hue":"Green"},{"name":"未读完","hue":"Orange"},{"name":"稍后再读","hue":"Yellow"},{"name":"放弃","hue":"Gray"}],"description":"反馈结果"},
+  {"type":"text","name":"备注","description":"用户反馈备注"}
+]
