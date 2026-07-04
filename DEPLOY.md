@@ -216,12 +216,26 @@ FEISHU_BASE_TABLE_ID
 
 快捷指令说明见 [templates/shortcuts/README.md](./templates/shortcuts/README.md)。
 
-iCloud 快捷指令模板链接待发布后补充。发布前请按说明手动搭建一次脱敏模板，并确认分享链接中不包含真实 CloudBase URL 或 `INTAKE_SECRET`。
+打开 iCloud 快捷指令模板：
 
-首次运行时填写：
+```text
+https://www.icloud.com/shortcuts/e53f733c6bfd4f02b4b363749706150f
+```
 
-- CloudBase HTTP URL
-- `INTAKE_SECRET`
+导入后不要直接运行，先打开快捷指令编辑页，展开最后一个「获取 URL 内容」动作，替换两个占位符：
+
+| 位置 | 占位符 | 替换为 |
+| --- | --- | --- |
+| URL | `https://YOUR_CLOUDBASE_HTTP_URL` | 你的 CloudBase HTTP 访问地址 |
+| JSON 字段 `secret` | `YOUR_INTAKE_SECRET` | 你的 `INTAKE_SECRET` |
+
+其他 JSON 字段保持默认即可：
+
+```text
+source=ios-shortcut
+channel=wechat
+entry=wechat-clipboard
+```
 
 之后每次运行：
 

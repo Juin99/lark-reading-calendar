@@ -1,44 +1,24 @@
 # 快捷指令模板
 
-模板位置：
+iCloud 模板链接：
 
 ```text
-templates/shortcuts/LarkReadingCalendar-Setup.shortcut
+https://www.icloud.com/shortcuts/e53f733c6bfd4f02b4b363749706150f
 ```
 
-> 当前仓库提供完整模板规格和手动搭建步骤。可导入 `.shortcut` 文件需要由 Shortcuts App 生成并签名，发布前请确认它不包含任何真实 URL 或 secret。
+这是首版最简模板。用户导入后需要手动替换两个占位符：
 
-## 首次运行配置逻辑
-
-首次运行时询问：
-
-- CloudBase HTTP URL
-- `INTAKE_SECRET`
-
-保存为配置文件：
-
-```text
-iCloud Drive/Shortcuts/lark-reading-calendar-config.json
-```
-
-配置文件内容：
-
-```json
-{
-  "cloudbaseUrl": "https://YOUR_CLOUDBASE_HTTP_URL",
-  "secret": "YOUR_INTAKE_SECRET",
-  "source": "ios-shortcut",
-  "channel": "wechat",
-  "entry": "wechat-clipboard"
-}
-```
+| 位置 | 占位符 | 替换为 |
+| --- | --- | --- |
+| URL | `https://YOUR_CLOUDBASE_HTTP_URL` | 用户自己的 CloudBase HTTP 访问地址 |
+| JSON 字段 `secret` | `YOUR_INTAKE_SECRET` | 用户自己的 `INTAKE_SECRET` |
 
 ## 每次运行逻辑
 
-1. 读取配置文件。
-2. 获取剪贴板。
-3. POST 到 CloudBase URL。
-4. 显示成功或失败通知。
+1. 获取剪贴板。
+2. 从剪贴板获取文本。
+3. 请求确认是否提交。
+4. POST 到 CloudBase URL。
 
 请求体：
 
@@ -52,12 +32,6 @@ iCloud Drive/Shortcuts/lark-reading-calendar-config.json
 }
 ```
 
-## 重置配置
+## 后续增强
 
-删除这个文件后再次运行快捷指令：
-
-```text
-iCloud Drive/Shortcuts/lark-reading-calendar-config.json
-```
-
-快捷指令会重新进入首次配置流程。
+后续可以升级为首次运行配置方案：首次询问 CloudBase HTTP URL 和 `INTAKE_SECRET`，保存到 `iCloud Drive/Shortcuts/lark-reading-calendar-config.json`，后续运行自动读取配置。

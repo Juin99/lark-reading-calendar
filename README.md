@@ -62,13 +62,14 @@ CloudBase HTTP 云函数 wechatTaskCollector
 模板入口：
 
 - CloudBase 配置模板：[cloudbaserc.example.json](./cloudbaserc.example.json)
-- 快捷指令模板说明：[templates/shortcuts/README.md](./templates/shortcuts/README.md)
+- iCloud 快捷指令模板：[Lark Reading Calendar Setup](https://www.icloud.com/shortcuts/e53f733c6bfd4f02b4b363749706150f)
+- 快捷指令配置说明：[templates/shortcuts/README.md](./templates/shortcuts/README.md)
 - 飞书多维表模板：[Lark Reading Calendar 阅读收件箱模板](https://juinbase.feishu.cn/base/UqRGbQ8OFazAgrsJ8YJc2mrSnee)
 - 飞书云文档教程：[Lark Reading Calendar 配置教程.md](https://juinbase.feishu.cn/file/B4r9bqHiko0jUkxrhvkcys8xn9c)
 - 多维表字段模板：[templates/bitable/schema.md](./templates/bitable/schema.md)
 - 机器可读字段定义：[templates/bitable/fields.json](./templates/bitable/fields.json)
 
-> 快捷指令 iCloud 模板链接待发布后补充。当前仓库先提供完整手动搭建蓝图，避免提交带个人配置的 `.shortcut` 文件。
+> 导入快捷指令后，请先按说明替换 `https://YOUR_CLOUDBASE_HTTP_URL` 和 `YOUR_INTAKE_SECRET` 两个占位符，再运行。
 
 ## HTTP 收集接口
 

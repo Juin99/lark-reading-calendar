@@ -53,16 +53,20 @@ YOUR_CLOUDBASE_HTTP_URL?action=auth_start&secret=YOUR_INTAKE_SECRET
 
 ## 第四步：配置快捷指令
 
-iCloud 快捷指令模板链接待发布。你也可以按 GitHub 仓库里的 `templates/shortcuts/README.md` 手动搭建。
-
-导入或手动搭建快捷指令后，首次运行会要求填写：
+iCloud 快捷指令模板：
 
 ```text
-CloudBase HTTP URL
-INTAKE_SECRET
+https://www.icloud.com/shortcuts/e53f733c6bfd4f02b4b363749706150f
 ```
 
-填完后复制一段微信内容，运行快捷指令即可提交。
+导入后不要直接运行。先打开快捷指令编辑页，展开最后一个「获取 URL 内容」动作，替换两个占位符：
+
+```text
+https://YOUR_CLOUDBASE_HTTP_URL
+YOUR_INTAKE_SECRET
+```
+
+替换完成后复制一段微信内容，运行快捷指令即可提交。
 
 ## 第五步：测试 5 条
 

@@ -1,114 +1,63 @@
 # 快捷指令模板
 
-iCloud 模板链接：待发布。
+iCloud 模板链接：
 
-当前仓库不提交 `.shortcut` 文件，因为 `.shortcut` 必须由 Apple Shortcuts App 生成并导出，手写文件无法保证可导入。发布前请用下面的动作蓝图新建一个完全脱敏的模板，再生成 iCloud 分享链接。
+```text
+https://www.icloud.com/shortcuts/e53f733c6bfd4f02b4b363749706150f
+```
 
-目标模板名：
+模板名：
 
 ```text
 Lark Reading Calendar Setup
 ```
 
-目标导出文件：
+## 使用方式
+
+这是首版最简模板。导入后请先打开快捷指令编辑页，展开最后一个「获取 URL 内容」动作，替换两个占位符。
+
+| 位置 | 占位符 | 替换为 |
+| --- | --- | --- |
+| URL | `https://YOUR_CLOUDBASE_HTTP_URL` | 你的 CloudBase HTTP 访问地址 |
+| JSON 字段 `secret` | `YOUR_INTAKE_SECRET` | 你的 `INTAKE_SECRET` |
+
+其他字段保持默认：
+
+| JSON 字段 | 默认值 |
+| --- | --- |
+| `source` | `ios-shortcut` |
+| `channel` | `wechat` |
+| `entry` | `wechat-clipboard` |
+
+配置完成后，复制一段微信内容，运行快捷指令即可提交到 CloudBase。
+
+## 动作结构
 
 ```text
-LarkReadingCalendar-Setup.shortcut
+获取剪贴板
+从剪贴板获取文本
+请求输入：请确认是否存入以下内容？
+获取 URL 内容：POST JSON 到 CloudBase
 ```
 
-> 注意：`.shortcut` 文件必须由 Apple Shortcuts App 生成并导出。不要手写一个同名文件伪装成可导入模板。正式发布前请在 iPhone 上导入验证一次，并确认文件中没有真实 CloudBase URL 或 secret。
-
-## 用户体验
-
-首次运行：
-
-1. 询问 CloudBase HTTP URL。
-2. 询问 `INTAKE_SECRET`。
-3. 使用默认值：
-   - `source`: `ios-shortcut`
-   - `channel`: `wechat`
-   - `entry`: `wechat-clipboard`
-4. 保存配置到 iCloud Drive。
-
-后续运行：
-
-1. 读取配置。
-2. 获取剪贴板。
-3. POST 到 CloudBase。
-4. 显示成功或失败通知。
-
-## 配置文件
-
-保存位置：
-
-```text
-iCloud Drive/Shortcuts/lark-reading-calendar-config.json
-```
-
-内容：
+请求 JSON：
 
 ```json
 {
-  "cloudbaseUrl": "https://YOUR_CLOUDBASE_HTTP_URL",
   "secret": "YOUR_INTAKE_SECRET",
   "source": "ios-shortcut",
+  "text": "<剪贴板文本>",
   "channel": "wechat",
   "entry": "wechat-clipboard"
 }
 ```
 
-## 手动搭建动作蓝图
+## 后续计划
 
-### A. 首次配置
-
-1. 获取文件：
-   - 路径：`Shortcuts/lark-reading-calendar-config.json`
-   - 如果不存在，不报错。
-2. 如果文件没有值：
-   - 请求输入：CloudBase HTTP URL
-   - 请求输入：INTAKE_SECRET
-   - 词典：
-     - `cloudbaseUrl`: 第一次请求输入
-     - `secret`: 第二次请求输入
-     - `source`: `ios-shortcut`
-     - `channel`: `wechat`
-     - `entry`: `wechat-clipboard`
-   - 获取词典的文本/JSON 表示。
-   - 存储文件：
-     - 路径：`Shortcuts/lark-reading-calendar-config.json`
-     - 覆盖：是
-
-### B. 正常提交
-
-1. 获取文件：`Shortcuts/lark-reading-calendar-config.json`
-2. 从输入获取词典。
-3. 获取剪贴板。
-4. 获取 URL 内容：
-   - URL：配置里的 `cloudbaseUrl`
-   - 方法：`POST`
-   - 请求体：`JSON`
-   - JSON 字段：
-     - `secret`: 配置里的 `secret`
-     - `text`: 剪贴板
-     - `source`: 配置里的 `source`
-     - `channel`: 配置里的 `channel`
-     - `entry`: 配置里的 `entry`
-5. 显示通知：`已保存到 Lark Reading Calendar`
-
-## 重置配置
-
-删除：
-
-```text
-iCloud Drive/Shortcuts/lark-reading-calendar-config.json
-```
-
-再次运行快捷指令即可重新填写 CloudBase URL 和 secret。
+后续可以升级为“首次运行保存配置到 iCloud Drive”的版本，避免每个用户手动编辑快捷指令。
 
 ## 发布前检查清单
 
-- 导出的 `.shortcut` 内不包含真实 CloudBase URL。
-- 导出的 `.shortcut` 内不包含真实 `INTAKE_SECRET`。
-- 首次运行能正确生成配置文件。
-- 第二次运行能直接读取配置。
+- 模板中只包含 `https://YOUR_CLOUDBASE_HTTP_URL`，不包含真实 CloudBase URL。
+- 模板中只包含 `YOUR_INTAKE_SECRET`，不包含真实 `INTAKE_SECRET`。
 - 请求体字段与 CloudBase 云函数文档一致。
