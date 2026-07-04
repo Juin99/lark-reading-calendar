@@ -11,6 +11,25 @@
 - 飞书账号和一个飞书群，用于机器人通知、日历和多维表。
 - iPhone 快捷指令 App，用于剪贴板一键收集。
 
+## 0.1 先理解：密钥和配置存在哪里
+
+这个项目开源的是代码和模板，不开源任何个人密钥。每个使用者都需要把自己的配置填到自己的 CloudBase 环境里。
+
+| 内容 | 存放位置 | 作用 | 是否提交到 GitHub |
+| --- | --- | --- | --- |
+| `INTAKE_SECRET` | CloudBase 云函数环境变量 | 快捷指令/机器人提交内容时的入口口令 | 否 |
+| `FEISHU_WEBHOOK_URL` | CloudBase 云函数环境变量 | 给飞书群发送收集进度和排期通知 | 否 |
+| `FEISHU_APP_ID` | CloudBase 云函数环境变量 | 识别你的飞书开放平台应用 | 否 |
+| `FEISHU_APP_SECRET` | CloudBase 云函数环境变量 | 让云函数能用你的飞书应用换取访问 token | 否 |
+| `FEISHU_REDIRECT_URI` | CloudBase 云函数环境变量 | 飞书 OAuth 授权成功后的回调地址 | 否 |
+| `OAUTH_STATE_SECRET` | CloudBase 云函数环境变量 | 校验 OAuth 回调，防止伪造授权回调 | 否 |
+| `FEISHU_BASE_APP_TOKEN` | CloudBase 云函数环境变量 | 指向你复制后的飞书多维表 | 否 |
+| `FEISHU_BASE_TABLE_ID` | CloudBase 云函数环境变量 | 指向多维表里的目标数据表 | 否 |
+| 飞书 `access_token` / `refresh_token` | CloudBase 数据库 `wechattaskauth` 集合 | OAuth 授权后由云函数自动保存，用来创建日历和写多维表 | 否 |
+| 快捷指令里的 `secret` | 用户自己的快捷指令副本 | 提交内容时携带 `INTAKE_SECRET` | 否 |
+
+也就是说：脚本里不会写死你的飞书日历 token。用户部署后，自己打开 `auth_start` 授权，云函数才会把飞书返回的 token 保存到他自己的 CloudBase 数据库里。
+
 ## 1. 获取项目
 
 ```bash
@@ -117,6 +136,8 @@ openssl rand -hex 24
 FEISHU_BASE_APP_TOKEN=
 FEISHU_BASE_TABLE_ID=
 ```
+
+等第 9 步复制好自己的多维表后，再把这两个值补上并重新部署。
 
 ## 7. 部署云函数并开启 HTTP
 

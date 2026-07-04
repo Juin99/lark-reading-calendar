@@ -40,6 +40,22 @@ CloudBase HTTP 云函数
 
 集合名可以通过环境变量覆盖。
 
+## 配置和密钥存储
+
+仓库只提交模板和占位符，不提交个人密钥。运行时配置分成两层：
+
+| 类型 | 存放位置 | 示例 | 说明 |
+| --- | --- | --- | --- |
+| 入口口令 | CloudBase 云函数环境变量 | `INTAKE_SECRET` | 快捷指令、机器人或 curl 提交内容时要携带 |
+| 飞书应用凭证 | CloudBase 云函数环境变量 | `FEISHU_APP_ID` / `FEISHU_APP_SECRET` | 用于发起 OAuth、刷新 token、调用飞书 API |
+| OAuth 回调配置 | CloudBase 云函数环境变量 | `FEISHU_REDIRECT_URI` / `OAUTH_STATE_SECRET` | 用于完成飞书用户授权 |
+| 目标多维表 | CloudBase 云函数环境变量 | `FEISHU_BASE_APP_TOKEN` / `FEISHU_BASE_TABLE_ID` | 决定记录写入哪一个多维表和哪一张表 |
+| 飞书 OAuth token | CloudBase 数据库 `wechattaskauth` | `accessToken` / `refreshToken` | 用户打开 `auth_start` 授权后由云函数自动保存 |
+| 阅读队列数据 | CloudBase 数据库 `wechattaskitems` | 单条链接、标题、状态 | 用户收集的待读内容 |
+| 阅读批次数据 | CloudBase 数据库 `wechattaskbatches` | 日历事件 ID、反馈状态 | 每批阅读 block 的状态 |
+
+关键点：飞书日历授权不是写死在代码里的。代码只保存 `FEISHU_APP_ID` / `FEISHU_APP_SECRET` 等应用配置；用户授权后，飞书返回的 `access_token` / `refresh_token` 会进入 `wechattaskauth` 集合。这样每个部署者都使用自己的飞书账号、自己的 CloudBase 数据库和自己的多维表。
+
 ## 核心接口
 
 所有接口复用同一个 CloudBase HTTP 地址，通过 `action` 区分。
