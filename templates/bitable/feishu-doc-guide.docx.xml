@@ -1,0 +1,99 @@
+<title>Lark Reading Calendar 配置教程</title>
+
+<callout emoji="📌" background-color="light-blue" border-color="blue">
+  <p><b>Lark Reading Calendar</b> 可以把微信剪贴板、微信机器人或其他自动化入口收集到的待读内容，保存到 CloudBase，并同步到飞书多维表。每收集够 5 条，会自动创建一个飞书日历阅读 block。</p>
+</callout>
+
+<h1>项目介绍视频</h1>
+<p><a type="url-preview" href="https://www.xiaohongshu.com/explore/6a4765da000000001003ce53?xsec_token=ABA-pX2tDa-IirL40I_uTeaRhhnICBTvVU-5F80jPhj9Y=&amp;xsec_source=pc_user">小红书视频讲解</a></p>
+<p>如果链接预览未展开，可以复制下面的原始链接到浏览器打开：</p>
+<p>https://www.xiaohongshu.com/explore/6a4765da000000001003ce53?xsec_token=ABA-pX2tDa-IirL40I_uTeaRhhnICBTvVU-5F80jPhj9Y=&amp;xsec_source=pc_user</p>
+
+<hr/>
+
+<h1>你需要准备</h1>
+<ul>
+  <li>腾讯云 CloudBase 环境</li>
+  <li>飞书群机器人</li>
+  <li>飞书开放平台应用</li>
+  <li>这个多维表模板的副本</li>
+  <li>iPhone 快捷指令模板</li>
+</ul>
+
+<h1>第一步：复制多维表</h1>
+<p>公开模板链接：</p>
+<p><a type="url-preview" href="https://juinbase.feishu.cn/base/UqRGbQ8OFazAgrsJ8YJc2mrSnee">Lark Reading Calendar 阅读收件箱模板</a></p>
+<p>复制本模板后，保留字段名不变。云函数会按字段名写入数据。</p>
+
+<callout emoji="❗" background-color="light-yellow" border-color="yellow">
+  <p>不要删除这些字段：内容、标题、链接、平台、来源、通道、入口、发送人、消息ID、CloudBaseItemId、状态、收集时间、批次ID、日历开始、日历结束、日历链接、反馈时间、阅读反馈、备注。</p>
+</callout>
+
+<h1>第二步：获取多维表参数</h1>
+<p>你需要把多维表的 app token 和 table id 填到 CloudBase 环境变量：</p>
+<pre lang="text" caption="CloudBase 环境变量"><code>FEISHU_BASE_APP_TOKEN
+FEISHU_BASE_TABLE_ID</code></pre>
+<p>通常 URL 中 <code>/base/</code> 后面的 token 是 <code>FEISHU_BASE_APP_TOKEN</code>。表 ID 通常在 URL 的 <code>table=</code> 参数中，或可以通过飞书多维表 API/CLI 查询。</p>
+
+<h1>第三步：配置飞书开放平台权限</h1>
+<p>飞书应用需要日历和多维表写入权限。配置完成后，打开 CloudBase 授权链接：</p>
+<pre lang="text" caption="OAuth 授权入口"><code>YOUR_CLOUDBASE_HTTP_URL?action=auth_start&amp;secret=YOUR_INTAKE_SECRET</code></pre>
+
+<h1>第四步：配置快捷指令</h1>
+<p>iCloud 快捷指令模板：</p>
+<p><a type="url-preview" href="https://www.icloud.com/shortcuts/e53f733c6bfd4f02b4b363749706150f">Lark Reading Calendar Setup</a></p>
+<p>导入后不要直接运行。先打开快捷指令编辑页，展开最后一个「获取 URL 内容」动作，替换两个占位符：</p>
+<table>
+  <thead>
+    <tr>
+      <th background-color="light-gray">占位符</th>
+      <th background-color="light-gray">替换为</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>https://YOUR_CLOUDBASE_HTTP_URL</code></td>
+      <td>你的 CloudBase HTTP 访问地址</td>
+    </tr>
+    <tr>
+      <td><code>YOUR_INTAKE_SECRET</code></td>
+      <td>你的 <code>INTAKE_SECRET</code></td>
+    </tr>
+  </tbody>
+</table>
+<p>替换完成后，复制一段微信内容，运行快捷指令即可提交。</p>
+
+<h1>第五步：测试 5 条</h1>
+<ol>
+  <li seq="auto">连续提交 5 条测试内容。</li>
+  <li seq="auto">飞书群收到收集进度。</li>
+  <li seq="auto">第 5 条后出现飞书日历事件。</li>
+  <li seq="auto">多维表新增 5 条记录。</li>
+  <li seq="auto">日历描述里有反馈链接。</li>
+  <li seq="auto">提交反馈后，多维表状态更新。</li>
+</ol>
+
+<hr/>
+
+<h1>常见问题</h1>
+<h2>多维表没有记录</h2>
+<ul>
+  <li>检查 <code>FEISHU_BASE_APP_TOKEN</code></li>
+  <li>检查 <code>FEISHU_BASE_TABLE_ID</code></li>
+  <li>检查飞书应用是否有 <code>base:app:update</code></li>
+  <li>检查是否重新 OAuth 授权</li>
+</ul>
+
+<h2>日历没有事件</h2>
+<ul>
+  <li>检查是否凑够 5 条。</li>
+  <li>检查飞书日历权限是否开启。</li>
+  <li>检查 <code>auth_start</code> 是否授权成功。</li>
+</ul>
+
+<h2>快捷指令失败</h2>
+<ul>
+  <li>检查 CloudBase URL 是否完整。</li>
+  <li>检查 <code>INTAKE_SECRET</code> 是否和云函数环境变量一致。</li>
+  <li>检查剪贴板是否为空。</li>
+</ul>

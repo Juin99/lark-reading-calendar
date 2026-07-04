@@ -9,7 +9,7 @@ https://juinbase.feishu.cn/base/UqRGbQ8OFazAgrsJ8YJc2mrSnee
 配套教程：
 
 ```text
-https://juinbase.feishu.cn/file/B4r9bqHiko0jUkxrhvkcys8xn9c
+https://juinbase.feishu.cn/docx/FM01dJSbXooYvyxagsMcRWSJnQd
 ```
 
 公开模板名：

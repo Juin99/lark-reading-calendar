@@ -209,7 +209,7 @@ https://juinbase.feishu.cn/base/UqRGbQ8OFazAgrsJ8YJc2mrSnee
 右上角选择复制或创建副本，得到你自己的多维表。模板配套教程：
 
 ```text
-https://juinbase.feishu.cn/file/B4r9bqHiko0jUkxrhvkcys8xn9c
+https://juinbase.feishu.cn/docx/FM01dJSbXooYvyxagsMcRWSJnQd
 ```
 
 如果公开链接失效，也可以按 [templates/bitable/schema.md](./templates/bitable/schema.md) 手动建表，或使用 [templates/bitable/fields.json](./templates/bitable/fields.json) 作为机器可读字段定义。

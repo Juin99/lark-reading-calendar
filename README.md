@@ -2,6 +2,8 @@
 
 把微信剪贴板、微信机器人或其他入口收集到的待读内容，自动进入 CloudBase 队列，凑够一组后写入飞书日历，并同步到飞书多维表。
 
+项目介绍视频：[小红书视频讲解](https://www.xiaohongshu.com/explore/6a4765da000000001003ce53?xsec_token=ABA-pX2tDa-IirL40I_uTeaRhhnICBTvVU-5F80jPhj9Y=&xsec_source=pc_user)
+
 这个项目适合这些场景：
 
 - 在微信里看到文章、视频、笔记，先复制到剪贴板，稍后集中读。
@@ -65,7 +67,7 @@ CloudBase HTTP 云函数 wechatTaskCollector
 - iCloud 快捷指令模板：[Lark Reading Calendar Setup](https://www.icloud.com/shortcuts/e53f733c6bfd4f02b4b363749706150f)
 - 快捷指令配置说明：[templates/shortcuts/README.md](./templates/shortcuts/README.md)
 - 飞书多维表模板：[Lark Reading Calendar 阅读收件箱模板](https://juinbase.feishu.cn/base/UqRGbQ8OFazAgrsJ8YJc2mrSnee)
-- 飞书云文档教程：[Lark Reading Calendar 配置教程.md](https://juinbase.feishu.cn/file/B4r9bqHiko0jUkxrhvkcys8xn9c)
+- 飞书云文档教程：[Lark Reading Calendar 配置教程](https://juinbase.feishu.cn/docx/FM01dJSbXooYvyxagsMcRWSJnQd)
 - 多维表字段模板：[templates/bitable/schema.md](./templates/bitable/schema.md)
 - 机器可读字段定义：[templates/bitable/fields.json](./templates/bitable/fields.json)
 

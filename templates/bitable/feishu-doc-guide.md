@@ -6,6 +6,12 @@
 
 `Lark Reading Calendar` 可以把微信剪贴板、微信机器人或其他自动化入口收集到的待读内容，保存到 CloudBase，并同步到飞书多维表。每收集够 5 条，会自动创建一个飞书日历阅读 block。
 
+项目介绍视频：
+
+```text
+https://www.xiaohongshu.com/explore/6a4765da000000001003ce53?xsec_token=ABA-pX2tDa-IirL40I_uTeaRhhnICBTvVU-5F80jPhj9Y=&xsec_source=pc_user
+```
+
 ## 你需要准备
 
 - 腾讯云 CloudBase 环境。

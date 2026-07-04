@@ -9,7 +9,7 @@ https://juinbase.feishu.cn/base/UqRGbQ8OFazAgrsJ8YJc2mrSnee
 配套教程：
 
 ```text
-https://juinbase.feishu.cn/file/B4r9bqHiko0jUkxrhvkcys8xn9c
+https://juinbase.feishu.cn/docx/FM01dJSbXooYvyxagsMcRWSJnQd
 ```
 
 如果你不使用公开模板，也可以手动创建字段。字段名需要和代码保持一致。
