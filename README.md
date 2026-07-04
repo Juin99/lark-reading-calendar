@@ -63,6 +63,8 @@ CloudBase HTTP 云函数 wechatTaskCollector
 4. 飞书多维表模板副本。
 5. iPhone 快捷指令模板。
 
+CloudBase 不是完全免费的服务，个人轻量使用可以先选择按量计费或个人版套餐；如果购买个人版，按当前 `19.9 元/月` 量级估算约 `240 元/年`，实际费用以腾讯云控制台和用量为准。
+
 模板入口：
 
 - CloudBase 配置模板：[cloudbaserc.example.json](./cloudbaserc.example.json)
