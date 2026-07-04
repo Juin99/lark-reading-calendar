@@ -1,0 +1,15 @@
+node_modules/
+.env
+.DS_Store
+
+# Personal CloudBase deployment config. Use cloudbaserc.example.json as template.
+cloudbaserc.json
+
+# Never commit personal shortcut exports unless they are fully redacted templates.
+*.personal.shortcut
+*-personal.shortcut
+
+# Local verification outputs
+coverage/
+dist/
+tmp/

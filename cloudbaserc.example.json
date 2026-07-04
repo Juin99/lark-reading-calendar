@@ -1,0 +1,33 @@
+{
+  "envId": "YOUR_CLOUDBASE_ENV_ID",
+  "functions": [
+    {
+      "name": "wechatTaskCollector",
+      "timeout": 20,
+      "runtime": "Nodejs20.0",
+      "handler": "index.main",
+      "envVariables": {
+        "FEISHU_WEBHOOK_URL": "YOUR_FEISHU_WEBHOOK_URL",
+        "INTAKE_SECRET": "YOUR_INTAKE_SECRET",
+        "FEISHU_KEYWORD": "",
+        "FEISHU_SECURITY_KEYWORD": "",
+        "BATCH_SIZE": "5",
+        "COLLECTION_ITEMS": "wechattaskitems",
+        "COLLECTION_BATCHES": "wechattaskbatches",
+        "COLLECTION_AUTH": "wechattaskauth",
+        "FEISHU_APP_ID": "YOUR_FEISHU_APP_ID",
+        "FEISHU_APP_SECRET": "YOUR_FEISHU_APP_SECRET",
+        "FEISHU_REDIRECT_URI": "YOUR_CLOUDBASE_HTTP_URL?action=oauth_callback",
+        "OAUTH_STATE_SECRET": "YOUR_OAUTH_STATE_SECRET",
+        "CALENDAR_EVENT_TITLE": "集中处理微信待办",
+        "CALENDAR_BLOCK_MINUTES": "45",
+        "CALENDAR_WORK_START": "09:30",
+        "CALENDAR_WORK_END": "18:00",
+        "CALENDAR_LOOKAHEAD_DAYS": "7",
+        "CALENDAR_REMINDER_MINUTES": "5",
+        "FEISHU_BASE_APP_TOKEN": "YOUR_FEISHU_BASE_APP_TOKEN",
+        "FEISHU_BASE_TABLE_ID": "YOUR_FEISHU_BASE_TABLE_ID"
+      }
+    }
+  ]
+}
