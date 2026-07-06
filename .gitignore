@@ -13,3 +13,8 @@ cloudbaserc.json
 coverage/
 dist/
 tmp/
+
+# Local-only presentation notes
+presentation/script.md
+presentation/*.local.md
+presentation/*.private.md
